@@ -12,11 +12,11 @@ export async function GET() {
 }
 
 export async function POST(request) {
-  const { id, content } = await request.json();
+  const { id, title, content } = await request.json();
 
   const { error } = await getSupabaseClient()
     .from('knowledge_base')
-    .upsert({ id, content, updated_at: new Date().toISOString() });
+    .upsert({ id, title, content, updated_at: new Date().toISOString() });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });

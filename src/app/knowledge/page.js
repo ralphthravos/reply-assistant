@@ -49,7 +49,7 @@ function KbSection({ section, initialContent }) {
       const res = await fetch('/api/knowledge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: section.id, content }),
+        body: JSON.stringify({ id: section.id, title: section.label, content }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Save failed');
