@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { supabase } from '../../../../lib/supabase';
+import { getSupabaseClient } from '../../../../lib/supabase';
 import { NextResponse } from 'next/server';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -18,7 +18,7 @@ export async function POST(request) {
   const text = formData.get('text') || '';
   const imageFile = formData.get('image');
 
-  const { data: kbRows, error } = await supabase
+  const { data: kbRows, error } = await getSupabaseClient()
     .from('knowledge_base')
     .select('id, content')
     .in('id', ['general', campaign]);

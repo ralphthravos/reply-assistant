@@ -1,8 +1,8 @@
-import { supabase } from '../../../../lib/supabase';
+import { getSupabaseClient } from '../../../../lib/supabase';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const { data, error } = await supabase
+  const { data, error } = await getSupabaseClient()
     .from('knowledge_base')
     .select('*')
     .order('id');
@@ -14,7 +14,7 @@ export async function GET() {
 export async function POST(request) {
   const { id, content } = await request.json();
 
-  const { error } = await supabase
+  const { error } = await getSupabaseClient()
     .from('knowledge_base')
     .update({ content, updated_at: new Date().toISOString() })
     .eq('id', id);
